@@ -6,3 +6,35 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id         Int      @id @default(autoincrement())
+  createAt   DateTime @default(now())
+  email      String   @unique
+  login      String   @unique
+  name       String   @default("")
+  surname    String   @default("")
+  password   String
+  phone      String   @default("")
+  dateBorn   DateTime @default("2019-10-12T07:20:50.52Z") @map("date_born")
+  avatarPath String   @default("") @map("avatar_path")
+}
+
+model Category {
+  id       Int        @id @default(autoincrement())
+  createAt DateTime   @default(now())
+  name     String     @unique @default("")
+  children Category[] @relation("SubCategories")
+  parent   Category?  @relation("SubCategories", fields: [parentId], references: [id], onDelete: Cascade)
+  parentId Int?
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  createAt    DateTime @default(now())
+  name        String   @default("")
+  weight      Int      @default(0)
+  description String   @default("")
+  price       Int      @default(0)
+  productPath String   @default("")
+}
