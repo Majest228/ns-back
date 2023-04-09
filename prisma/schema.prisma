@@ -27,14 +27,17 @@ model Category {
   children Category[] @relation("SubCategories")
   parent   Category?  @relation("SubCategories", fields: [parentId], references: [id], onDelete: Cascade)
   parentId Int?
+  product  Product[]
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
-  createAt    DateTime @default(now())
-  name        String   @default("")
-  weight      Int      @default(0)
-  description String   @default("")
-  price       Int      @default(0)
-  productPath String   @default("")
+  id          Int       @id @default(autoincrement())
+  createAt    DateTime  @default(now())
+  name        String    @default("")
+  weight      Int       @default(0)
+  description String    @default("")
+  price       Int       @default(0)
+  productPath String    @default("")
+  Category    Category? @relation(fields: [categoryId], references: [id])
+  categoryId  Int?
 }
