@@ -107,4 +107,40 @@ export const tableProducts = [
 		productPath: "uploads/sushi12.png",
 		categoryId: 2
 	},
+	{
+		id: 12,
+		name: "Сет #3",
+		weight: 950,
+		description: "філадельфія з лососем, філадельфія з вугром, зелений дракон",
+		price: 1265,
+		productPath: "uploads/sushi13.png",
+		categoryId: 3
+	},
+	{
+		id: 13,
+		name: "Сет #1",
+		weight: 590,
+		description: "маки лосось, нігірі лосось, філадельфія з лососем",
+		price: 1035,
+		productPath: "uploads/sushi14.png",
+		categoryId: 3
+	},
+	{
+		id: 14,
+		name: "Сет #2",
+		weight: 895,
+		description: "нігірі лосось, філадельфія з лососем, нігірі вугор, філадельфія з вугром",
+		price: 1540 ,
+		productPath: "uploads/sushi15.png",
+		categoryId: 3
+	},	
+	{
+		id: 15,
+		name: "Сет #4",
+		weight: 2120 ,
+		description: "нігірі лосось, філадельфія з лососем, нігірі вугор, філадельфія з вугром, зелений дракон, каліфорнія",
+		price: 3300 ,
+		productPath: "uploads/sushi16.png",
+		categoryId: 3
+	},
 ]
