@@ -1,4 +1,4 @@
-export const tableProducts = [
+export const fieldProducts = [
 	{
 		id: 0,
 		name: "Гункан з восьминогом",
@@ -143,4 +143,5 @@ export const tableProducts = [
 		productPath: "uploads/sushi16.png",
 		categoryId: 3
 	},
+	
 ]
