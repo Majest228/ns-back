@@ -3,18 +3,24 @@ import { PrismaService } from 'src/prisma.service'
 
 @Injectable()
 export class ProductService {
-    constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) { }
 
-    async getAllProducts(search) {
-      return await this.prisma.product.findMany()
-    }
+  async getAllProducts(search: string) {
 
-    async getById(id: number) {
-        const product = await this.prisma.product.findUnique({ where: { id } })
+    const products = await this.prisma.product.findMany({ include: { Category: { select: { name: true } } } })
 
-        if (!product) throw new BadRequestException("Такого продукта нет")
+    const filteredProducts = await products.filter(p => p.Category.name == search)
 
-        return product
-    }
+    return filteredProducts
+
+  }
+
+  async getById(id: number) {
+    const product = await this.prisma.product.findUnique({ where: { id } })
+
+    if (!product) throw new BadRequestException("Такого продукта нет")
+
+    return product
+  }
 }
 

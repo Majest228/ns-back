@@ -1,28 +1,15 @@
 import { PrismaClient, Product } from '@prisma/client'
-const prisma = new PrismaClient()
 import { fieldProducts } from './products'
+const prisma = new PrismaClient()
 
 const createProducts = async (quantity: number) => {
 	const products: Product[] = []
 
 	console.log(`Created ${products.length} products`)
 
-	for (let i = 0; i < quantity; i++) {
-		fieldProducts.forEach(async data => {
-			const product = await prisma.product.create({
-				data: {
-					name: data.name,
-					price: data.price,
-					weight: data.weight,
-					productPath: data.productPath,
-					description: data.description,
-					Category: {create :{id: data.categoryId}}
-				}
-			})
-			products.push(product)
-		})
-	}
-
+	await prisma.product.createMany({
+		data: fieldProducts
+	})
 }
 
 async function main() {

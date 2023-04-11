@@ -23,7 +23,7 @@ model User {
 model Category {
   id       Int        @id @default(autoincrement())
   createAt DateTime   @default(now())
-  name     String     @unique @default("")
+  name     String     @default("")
   children Category[] @relation("SubCategories")
   parent   Category?  @relation("SubCategories", fields: [parentId], references: [id], onDelete: Cascade)
   parentId Int?
