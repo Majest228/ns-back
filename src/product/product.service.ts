@@ -22,5 +22,9 @@ export class ProductService {
 
     return product
   }
+
+  async getManyByIdCategory(name: string) {
+    return await this.prisma.product.findMany({ where: { Category: { name } } })
+  }
 }
 

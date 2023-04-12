@@ -14,4 +14,9 @@ export class ProductController {
   async getById(@Param("id") id: number) {
     return await this.productService.getById(+id)
   }
+
+  @Get('many/:name')
+  async getManyByIdCategory(@Param('name') name: string) {
+    return await this.productService.getManyByIdCategory(name)
+  }
 }

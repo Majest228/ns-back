@@ -8,4 +8,9 @@ export class CategoryService {
 	async getAll() {
 		return await this.prisma.category.findMany()
 	}
+
+
+	async getById(id: number) {
+		return await this.prisma.category.findUnique({ where: { id }, include: { product: true } })
+	}
 }
