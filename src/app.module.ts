@@ -6,13 +6,15 @@ import { ProductModule } from './product/product.module';
 import { FilesModule } from './files/files.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { CategoryModule } from './category/category.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [AuthModule, ProductModule, FilesModule,  MulterModule.register({
     dest: './uploads',
   }),
   FilesModule,
-  CategoryModule,],
+  CategoryModule,
+  UserModule,],
   controllers: [AppController],
   providers: [AppService],
 })
