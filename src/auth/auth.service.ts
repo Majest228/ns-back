@@ -1,9 +1,9 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma.service';
+import { BadRequestException, Injectable } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
+import { User } from '@prisma/client'
 import { hash, verify } from 'argon2'
-import { AuthDto } from './dto/auth.dto';
-import { JwtService } from '@nestjs/jwt';
-import { User } from '@prisma/client';
+import { PrismaService } from 'src/prisma.service'
+import { AuthDto } from './dto/auth.dto'
 
 @Injectable()
 export class AuthService {
@@ -34,7 +34,7 @@ export class AuthService {
         const tokens = await this.createToken(currentUser.id, currentUser.email)
 
         return {
-            user: this.returnFields(currentUser),
+            user: await this.returnFields(currentUser),
             ...tokens
         }
     }
@@ -46,7 +46,7 @@ export class AuthService {
         }
 
         const accessToken = this.jwt.sign(data, {
-            expiresIn: '1h',
+            expiresIn: '24h',
         })
 
         const refreshToken = this.jwt.sign(data, {
