@@ -20,6 +20,12 @@ model User {
   avatarPath String   @default("") @map("avatar_path")
 }
 
+model Cities {
+  id Int @id @default(autoincrement())
+  createAt DateTime @default(now())
+  name String @unique
+}
+
 model Category {
   id       Int        @id @default(autoincrement())
   createAt DateTime   @default(now())
