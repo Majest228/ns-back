@@ -20,9 +20,14 @@ model User {
   avatarPath String   @default("") @map("avatar_path")
 }
 
+model Countries {
+  id Int @id @default(autoincrement())
+  name String @unique
+  flagPath
+}
+
 model Cities {
   id Int @id @default(autoincrement())
-  createAt DateTime @default(now())
   name String @unique
 }
 
