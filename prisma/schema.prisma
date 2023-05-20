@@ -22,15 +22,12 @@ model User {
   favorite   Favorite[]
 }
 
-model Countries {
-  id Int @id @default(autoincrement())
-  name String @unique
-  flagPath String
-}
-
 model Cities {
   id Int @id @default(autoincrement())
   name String @unique
+  children  Cities[]   @relation("SubCategories")
+  parent    Cities?    @relation("SubCategories", fields: [parentId], references: [id])
+  parentId  Int?
 }
 
 model Category {

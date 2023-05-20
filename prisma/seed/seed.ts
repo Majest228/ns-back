@@ -1,5 +1,6 @@
-import { Category, PrismaClient, Product } from '@prisma/client';
+import { Category, PrismaClient, Product, Cities } from '@prisma/client';
 import { fieldProducts } from './products';
+import { fieldCities } from './cities';
 const prisma = new PrismaClient();
 
 const createProducts = async (quantity: number) => {
@@ -10,6 +11,10 @@ const createProducts = async (quantity: number) => {
 
   await prisma.product.createMany({
     data: fieldProducts,
+  });
+
+  await prisma.cities.createMany({
+    data: fieldCities,
   });
 };
 

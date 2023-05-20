@@ -9,6 +9,7 @@ import { CategoryModule } from './category/category.module';
 import { UserModule } from './user/user.module';
 import { AddressModule } from './address/address.module';
 import { FavoriteModule } from './favorite/favorite.module';
+import { CityModule } from './city/city.module';
 
 @Module({
   imports: [AuthModule, ProductModule, FilesModule,  MulterModule.register({
@@ -18,7 +19,8 @@ import { FavoriteModule } from './favorite/favorite.module';
   CategoryModule,
   UserModule,
   AddressModule,
-  FavoriteModule,],
+  FavoriteModule,
+  CityModule,],
   controllers: [AppController],
   providers: [AppService],
 })
