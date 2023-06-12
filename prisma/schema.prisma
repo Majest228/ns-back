@@ -20,6 +20,8 @@ model User {
   avatarPath String   @default("") @map("avatar_path")
   address Address[]
   favorite   Favorite[]
+  cart   Cart[]
+  Order      Order[]
 }
 
 model Cities {
@@ -63,6 +65,8 @@ model Product {
   Category    Category? @relation(fields: [categoryId], references: [id])
   categoryId  Int?
   favorite                Favorite[]
+  cart   Cart[]
+  OrderItem               OrderItem[]
 }
 
 model Favorite {
@@ -73,4 +77,38 @@ model Favorite {
   userId    Int      @map("user_id")
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId Int      @map("product_id")
+}
+
+model Cart {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int      @map("user_id")
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int      @map("product_id")
+  quantity  Int
+}
+
+
+model Order {
+  id        Int         @id @default(autoincrement())
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+  status    String
+  items     OrderItem[]
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int         @map("user_id")
+}
+
+model OrderItem {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  price     Int
+  order     Order?   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId   Int?     @map("order_id")
+  product   Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int?     @map("product_id")
+  quantity  Int
 }
