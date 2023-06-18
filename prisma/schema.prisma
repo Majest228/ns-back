@@ -7,29 +7,39 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum DeliveryType {
+  DELIVERY
+  PICKUP
+}
+
+enum STATUS {
+  CREATED
+  ACCEPTED
+}
+
 model User {
-  id         Int      @id @default(autoincrement())
-  createAt   DateTime @default(now())
-  email      String   @unique
-  login      String   @unique
-  name       String   @default("")
-  surname    String   @default("")
+  id         Int        @id @default(autoincrement())
+  createAt   DateTime   @default(now())
+  email      String     @unique
+  login      String     @unique
+  name       String     @default("")
+  surname    String     @default("")
   password   String
-  phone      String   @default("")
-  dateBorn   DateTime @default("2019-10-12T07:20:50.52Z") @map("date_born")
-  avatarPath String   @default("") @map("avatar_path")
-  address Address[]
+  phone      String     @default("")
+  dateBorn   DateTime   @default("2019-10-12T07:20:50.52Z") @map("date_born")
+  avatarPath String     @default("") @map("avatar_path")
+  address    Address[]
   favorite   Favorite[]
-  cart   Cart[]
+  cart       Cart[]
   Order      Order[]
 }
 
 model Cities {
-  id Int @id @default(autoincrement())
-  name String @unique
-  children  Cities[]   @relation("SubCategories")
-  parent    Cities?    @relation("SubCategories", fields: [parentId], references: [id])
-  parentId  Int?
+  id       Int      @id @default(autoincrement())
+  name     String   @unique
+  children Cities[] @relation("SubCategories")
+  parent   Cities?  @relation("SubCategories", fields: [parentId], references: [id])
+  parentId Int?
 }
 
 model Category {
@@ -43,30 +53,30 @@ model Category {
 }
 
 model Address {
-  id Int @id @default(autoincrement())
-  createAt DateTime   @default(now())
-  street String
-  streetNumber Int @map("street_number") @default(0)
-  flat Int @default(0)
-  entrance Int @default(0) //подъезд 
-  floor Int @default(0) //этаж
-  User    User? @relation(fields: [userId], references: [id])
-  userId  Int? @map("user_id")
+  id           Int      @id @default(autoincrement())
+  createAt     DateTime @default(now())
+  street       String
+  streetNumber Int      @default(0) @map("street_number")
+  flat         Int      @default(0)
+  entrance     Int      @default(0) //подъезд 
+  floor        Int      @default(0) //этаж
+  User         User?    @relation(fields: [userId], references: [id])
+  userId       Int?     @map("user_id")
 }
 
 model Product {
-  id          Int       @id @default(autoincrement())
-  createAt    DateTime  @default(now())
-  name        String    @default("")
-  weight      Int       @default(0)
-  description String    @default("")
-  price       Int       @default(0)
-  productPath String    @default("")
-  Category    Category? @relation(fields: [categoryId], references: [id])
+  id          Int         @id @default(autoincrement())
+  createAt    DateTime    @default(now())
+  name        String      @default("")
+  weight      Int         @default(0)
+  description String      @default("")
+  price       Int         @default(0)
+  productPath String      @default("")
+  Category    Category?   @relation(fields: [categoryId], references: [id])
   categoryId  Int?
-  favorite                Favorite[]
-  cart   Cart[]
-  OrderItem               OrderItem[]
+  favorite    Favorite[]
+  cart        Cart[]
+  OrderItem   OrderItem[]
 }
 
 model Favorite {
@@ -90,15 +100,15 @@ model Cart {
   quantity  Int
 }
 
-
 model Order {
-  id        Int         @id @default(autoincrement())
-  createdAt DateTime    @default(now()) @map("created_at")
-  updatedAt DateTime    @updatedAt @map("updated_at")
-  status    String
-  items     OrderItem[]
-  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    Int         @map("user_id")
+  id           Int          @id @default(autoincrement())
+  createdAt    DateTime     @default(now()) @map("created_at")
+  updatedAt    DateTime     @updatedAt @map("updated_at")
+  status       STATUS       @default(CREATED)
+  typeDelivery DeliveryType @default(DELIVERY)
+  items        OrderItem[]
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       Int          @map("user_id")
 }
 
 model OrderItem {

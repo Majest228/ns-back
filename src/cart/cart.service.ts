@@ -35,6 +35,48 @@ export class CartService {
       },
     });
   }
+
+  async incrementCartItem(cartItemId: number): Promise<Cart> {
+    return this.prisma.cart.update({
+      where: {
+        id: cartItemId,
+      },
+      data: {
+        quantity: {
+          increment: 1,
+        },
+      },
+    });
+  }
+
+  async decrementCartItem(cartItemId: number): Promise<Cart> {
+    const cartItem = await this.prisma.cart.findUnique({
+      where: {
+        id: cartItemId,
+      },
+    });
+
+    if (cartItem.quantity === 1) {
+      await this.prisma.cart.delete({
+        where: {
+          id: cartItemId,
+        },
+      });
+      return null;
+    }
+
+    return this.prisma.cart.update({
+      where: {
+        id: cartItemId,
+      },
+      data: {
+        quantity: {
+          decrement: 1,
+        },
+      },
+    });
+  }
+
   async getCartItems(userId: number): Promise<Cart[]> {
     return this.prisma.cart.findMany({
       where: {
@@ -42,6 +84,25 @@ export class CartService {
       },
       include: {
         product: true,
+      },
+      orderBy: {
+        id: 'asc',
+      },
+    });
+  }
+
+  async removeCartItem(cartItemId: number): Promise<void> {
+    await this.prisma.cart.delete({
+      where: {
+        id: cartItemId,
+      },
+    });
+  }
+
+  async removeAllCartItems(userId: number): Promise<void> {
+    await this.prisma.cart.deleteMany({
+      where: {
+        userId,
       },
     });
   }

@@ -11,6 +11,7 @@ import { AddressModule } from './address/address.module';
 import { FavoriteModule } from './favorite/favorite.module';
 import { CityModule } from './city/city.module';
 import { CartModule } from './cart/cart.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [AuthModule, ProductModule, FilesModule,  MulterModule.register({
@@ -22,7 +23,8 @@ import { CartModule } from './cart/cart.module';
   AddressModule,
   FavoriteModule,
   CityModule,
-  CartModule,],
+  CartModule,
+  OrderModule,],
   controllers: [AppController],
   providers: [AppService],
 })
